@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Push Notification App</title>
+</head>
+<body>
+  <h1>Push Notification App</h1>
+  <button onclick="send()" id="subscribe">Subscribe to Notifications</button>
+  <script>
+    // Fetch the public Vapid key from the server
+    fetch('/vapidPublicKey')
+      .then(response => response.text())
+      .then(publicVapidKey => {
+        const script = document.createElement('script');
+        script.innerHTML = `const publicVapidKey = "${publicVapidKey}";`;
+        document.head.appendChild(script);
+
+        const mainScript = document.createElement('script');
+        mainScript.src = 'main.js';
+        document.body.appendChild(mainScript);
+      })
+      .catch(err => console.error('Failed to fetch VAPID key:', err));
+  </script>
+</body>
+</html>
