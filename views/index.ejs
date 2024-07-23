@@ -1,5 +1,7 @@
-<h2>Home Page</h2>
-<p><%= message %></p>
 
-<h1>Push Notification App</h1>
+<h1 class="text-red-500">Push Notification App</h1>
 <button onclick="send()" id="subscribe">Subscribe to Notifications</button>
+
+<% subscriptions.forEach( subscription => {%>
+  <p><%= subscription.endpoint %></p>
+<% }) %>

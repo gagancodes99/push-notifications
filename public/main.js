@@ -18,7 +18,7 @@ async function send() {
   });
 
   // Send Push Notification
-  await fetch('/subscribe', {
+  await fetch('/push_notifications/subscribe', {
     method: 'POST',
     body: JSON.stringify(subscription),
     headers: {

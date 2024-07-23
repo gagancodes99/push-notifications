@@ -4,20 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
-<body>
-    <%- include('../components/header') %>
+<body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+  
+  <%- include('../components/header') %>
 
-  <main>
+  <main class="container mx-auto p-4">
     <%- body %>
   </main>
 
   <%- include('../components/footer') %>
 </body>
+
 <script>
     // Fetch the public Vapid key from the server
-    fetch('/vapidPublicKey')
+    fetch('/push_notifications/vapidPublicKey')
       .then(response => response.text())
       .then(publicVapidKey => {
         const script = document.createElement('script');

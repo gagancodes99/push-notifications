@@ -1,5 +1,7 @@
+const SubscriptionModel = require('../models/subscriptionModel');
 const renderWithLayout = require('../utils/renderWithLayout');
 
-exports.getHomePage = (req, res) => {
-  renderWithLayout(res, 'index', { title: 'Home Page', message: 'Welcome to the Home Page!' });
+exports.getHomePage = async(req, res) => {
+  const subscriptions = await SubscriptionModel.find()
+  renderWithLayout(res, 'index', { title: 'Home Page', subscriptions:subscriptions });
 };
