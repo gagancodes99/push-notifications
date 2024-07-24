@@ -6,9 +6,9 @@ require('dotenv').config();
 
 const app = express();
 
-// Connect to MongoDB
-const connectDB = require('./config/database');
-connectDB();
+// // Connect to MongoDB
+// const connectDB = require('./config/database');
+// connectDB();
 
 //Middleware
 app.use(bodyParser.json());

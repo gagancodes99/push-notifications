@@ -6,6 +6,8 @@ const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
 
 webpush.setVapidDetails('mailto:gagangrewal1999@gmail.com', publicVapidKey, privateVapidKey);
 
+let subscriptions = []
+
 const pushNotificationsController = {
 
     vapidPublickey: async(req,res) => {
@@ -17,15 +19,15 @@ const pushNotificationsController = {
 
             const subscription = req.body;
             // console.log('Subscription received:', subscription);
-            await SubscriptionModel.create(subscription)
-
+            // await SubscriptionModel.create(subscription)
+            subscriptions.push(subscription)
             res.status(201).json({});
       
-            const payload = JSON.stringify({ title: 'Push Test' });
+            // const payload = JSON.stringify({ title: 'Push Test' });
         
-            webpush.sendNotification(subscription, payload).catch(error => {
-            console.error('Error sending notification:', error);
-            });
+            // webpush.sendNotification(subscription, payload).catch(error => {
+            // console.error('Error sending notification:', error);
+            // });
 
         }catch(err){
             res.status(400).json({ error: err.message });
@@ -33,11 +35,29 @@ const pushNotificationsController = {
     },
 
     allSubscriptions:async(req,res)=>{
+        // try{
+        //     const subscriptions = await SubscriptionModel.find();
+        //     return subscriptions
+        // }catch(err){
+        //     throw error
+        // }
+    },
+
+    sendNotification:async(req,res)=>{
         try{
-            const subscriptions = await SubscriptionModel.find();
-            res.status(200).json(subscriptions);
+
+            const payload = JSON.stringify(req.body)
+            console.log(payload)
+            // const subscriptions = await SubscriptionModel.find();
+            res.status(201).json("Sent")
+            subscriptions.forEach((subscription)=>{
+    
+                webpush.sendNotification(subscription, payload).catch(error => {
+                    console.error('Error sending notification:', error);
+                });
+            })
         }catch(err){
-            res.status(400).json({ error: err.message });
+            res.status(500)
         }
     }
     

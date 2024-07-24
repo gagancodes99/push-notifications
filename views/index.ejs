@@ -1,6 +1,9 @@
 
-<h1 class="text-red-500">Push Notification App</h1>
-<button onclick="send()" id="subscribe">Subscribe to Notifications</button>
+<button onclick="requestNotificationPermission()" id="askPermisson">Ask Permission</button>
+<button onclick="send()" id="subscribe">Subscribe</button>
+<button onclick="unsubscribe()" id="unsubscribe">Unsubscribe</button>
+
+<%- include('./components/pushNotificationForm') %>
 
 <% subscriptions.forEach( subscription => {%>
   <p><%= subscription.endpoint %></p>

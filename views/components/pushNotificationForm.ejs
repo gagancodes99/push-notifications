@@ -1,0 +1,132 @@
+  <style>
+    form {
+      max-width: 500px;
+      margin: auto;
+      padding: 1em;
+      background: #f9f9f9;
+      border-radius: 5px;
+    }
+    div {
+      margin-bottom: 1em;
+    }
+    label {
+      margin-bottom: .5em;
+      color: #333333;
+      display: block;
+    }
+    input {
+      border: 1px solid #CCCCCC;
+      padding: .5em;
+      font-size: 1em;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 0.7em;
+      color: #fff;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+
+  <form id="notification-form">
+    <!-- <div>
+      <label for="server-key">Server Key</label>
+      <input type="text" id="server-key" name="server-key" required>
+    </div>
+    <div>
+      <label for="device-token">Device Token</label>
+      <input type="text" id="device-token" name="device-token" required>
+    </div> -->
+    <div>
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" required>
+    </div>
+    <div>
+      <label for="message">Message</label>
+      <input type="text" id="message" name="message" required>
+    </div>
+    <!-- <div>
+      <label for="click-action">Click Action (Optional)</label>
+      <input type="text" id="click-action" name="click-action">
+    </div> -->
+    <!-- <div>
+      <label for="icon">Icon URL (Optional)</label>
+      <input type="text" id="icon" name="icon">
+    </div>
+    <div>
+      <label for="badge">Badge URL (Optional)</label>
+      <input type="text" id="badge" name="badge">
+    </div>
+    <div>
+      <label for="sound">Sound (Optional)</label>
+      <input type="text" id="sound" name="sound">
+    </div>
+    <div>
+      <label for="image">Image URL (Optional)</label>
+      <input type="text" id="image" name="image">
+    </div>
+    <div>
+      <label for="data">Custom Data (Optional, JSON)</label>
+      <input type="text" id="data" name="data">
+    </div> -->
+    <button type="submit">Send Notification</button>
+  </form>
+
+  <script>
+    document.getElementById('notification-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      // const serverKey = document.getElementById('server-key').value;
+      // const deviceToken = document.getElementById('device-token').value;
+      const title = document.getElementById('title').value;
+      const message = document.getElementById('message').value;
+      // const clickAction = document.getElementById('click-action').value;
+      // const icon = document.getElementById('icon').value;
+      // const badge = document.getElementById('badge').value;
+      // const sound = document.getElementById('sound').value;
+      // const image = document.getElementById('image').value;
+      // const data = document.getElementById('data').value;
+
+      const payload = {
+        message: {
+          // token: deviceToken,
+          notification: {
+            title: title,
+            body: message,
+            // ...(clickAction && { click_action: clickAction }),
+            // ...(icon && { icon: icon }),
+            // ...(badge && { badge: badge }),
+            // ...(sound && { sound: sound }),
+            // ...(image && { image: image })
+          },
+          // ...(data && { data: JSON.parse(data) })
+        }
+      };
+
+      try {
+        const response = await fetch('/push_notifications/send_notification', {
+          method: 'POST',
+          headers: {
+            // 'Authorization': `Bearer ${serverKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload.message.notification)
+        });
+
+        if (response.ok) {
+          // alert('Notification sent successfully');
+        } else {
+          const errorData = await response.json();
+          alert(`Error sending notification: ${errorData.error}`);
+        }
+      } catch (error) {
+        alert(`Error sending notification: ${error.message}`);
+      }
+    });
+  </script>
