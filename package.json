@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run tailwind:css && nodemon server.js",
+    "start": "npm run tailwind:css && node server.js",
+    "startdev": "npm run tailwind:css && nodemon server.js",
     "tailwind:css": "npx tailwindcss -i public/stylesheets/tailwind.css -o public/stylesheets/style.css"
   },
   "keywords": [],
